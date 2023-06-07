@@ -1,0 +1,5 @@
+/home/kyle/atr/aubie/src/external/atr_msgs
+/home/kyle/atr/aubie/src/external/raptor-dbw-ros2/raptor_dbw_msgs
+/home/kyle/atr/aubie/src/drivers/novatel_oem7_driver/novatel_oem7_msgs
+/home/kyle/atr/aubie/src/drivers/vectornav/vectornav_msgs
+/home/kyle/stable/TinyMAT
