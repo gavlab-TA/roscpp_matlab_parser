@@ -3,7 +3,7 @@ build/bag_analyzer
 build/CMakeFiles
 build/Makefile
 build/parser_generator
-build/CMakeChache.txt
+build/CMakeCache.txt
 build/cmake_install.cmake
 build/message_analyzer
 config/bag_info.txt
