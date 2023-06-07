@@ -235,6 +235,7 @@ void ParserGenerator::writeHeader()
         output << "\tstd::string " + output_filenames.at(i) + ";\n";
     }*/
     output << "\tstd::string filename;\n";
+    output << "\tstd::string path;\n";
 
     // output << "\n\t//Output File Variables\n";
     /*for (int i = 0; i < output_files.size(); i++)
@@ -286,7 +287,7 @@ void ParserGenerator::writeSource()
 
     // output << "\tstd::string bag_filename = this->get_parameter(\"path\").as_string() + this->get_parameter(\"bagfile\").as_string();\n\n";
 
-    output << "\tstd::string path = \"/home/kyle/Data/test/\";";
+    output << "\tpath = \"/home/kyle/Data/test/\";";
     output << "\tstd::string bag_filename = path + \"2023-01-03_VEGAS_run1_vehicle_1726\";\n";
 
     output << "\tthis->reader = new rosbag2_cpp::readers::SequentialReader();\n";
@@ -389,7 +390,6 @@ void ParserGenerator::writeSource()
                     //    }
                     //}
                     field_array.push_back(bangToDot(temp));
-                    std::cout<<field_array.at(field_array.size()-1)<<std::endl;
                 }
                 else
                 {
@@ -415,7 +415,7 @@ void ParserGenerator::writeSource()
         }
         output << "\n";
 
-        output << "\tfilename = \"" + slashToUnderscore(temp) + ".mat\";\n";
+        output << "\tfilename = path + \"" + slashToUnderscore(temp) + ".mat\";\n";
 
         output << "\tthis->reader->open(this->storage_options, this->converter_options);\n";
         output << "\tstd::vector<rosbag2_storage::TopicMetadata> topics = this->reader->get_all_topics_and_types();\n";
@@ -441,7 +441,6 @@ void ParserGenerator::writeSource()
             {
                 split_string = split(field_array.at(j), '@');
                 // std::cout<<field_array.at(j)<<"\t"<<split_string.size()<<std::endl;
-                std::cout<<split_string.at(0)<<std::endl;
                 if (split_string.size() == 1)
                 {
                     split_string.at(0).erase(split_string.at(0).end() - 6, split_string.at(0).end());
@@ -477,28 +476,30 @@ void ParserGenerator::writeSource()
             }
         }
 
-        output << "\n\t\t\tTinyMATWriterFile *mat_file = TinyMATWriter_open(filename.c_str());\n";
+        output << "\t\t}\n";
+        output << "\n\t}\n";
+
+        output << "\n\tTinyMATWriterFile *mat_file = TinyMATWriter_open(filename.c_str());\n";
         temp = topic_sorting_data.at(i).topic_name;
         temp.erase(temp.begin());
-        output << "\t\t\tTinyMATWriter_startStruct(mat_file, \"" + slashToUnderscore(temp) + "\");\n\n";    
+        output << "\tTinyMATWriter_startStruct(mat_file, \"" + slashToUnderscore(temp) + "\");\n\n";    
 
         for (int j = 0; j < field_names.size(); j++)
         {
             if (types.at(j) == "string")
             {
-                output << "\t\t\tTinyMATWriter_writeStringVector(mat_file, \"" + bangToUnderscore(field_names.at(j)) + "\", " + bangToUnderscore(field_names.at(j)) + ");\n";
+                //output << "\tTinyMATWriter_writeStringVector(mat_file, \"" + bangToUnderscore(field_names.at(j)) + "\", " + bangToUnderscore(field_names.at(j)) + ");\n";
             }
             else
             {
-                output << "\t\t\tTinyMATWriter_writeDoubleVector(mat_file, \"" + bangToUnderscore(field_names.at(j)) + "\", " + bangToUnderscore(field_names.at(j)) + ", false);\n";
+                output << "\tTinyMATWriter_writeDoubleVector(mat_file, \"" + bangToUnderscore(field_names.at(j)) + "\", " + bangToUnderscore(field_names.at(j)) + ", false);\n";
             }
         }  
 
-        output << "\n\t\t\tTinyMATWriter_endStruct(mat_file);\n";
-        output << "\t\t\tTinyMATWriter_close(mat_file);\n";  
+        output << "\n\tTinyMATWriter_endStruct(mat_file);\n";
+        output << "\tTinyMATWriter_close(mat_file);\n";  
 
-        output << "\t\t}\n";
-        output << "\n\t}\n";
+        
 
         output << "\tthis->reader->close();\n}\n\n";
     }
