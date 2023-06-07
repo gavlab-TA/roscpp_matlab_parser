@@ -278,6 +278,8 @@ void ParserGenerator::writeHeader()
 void ParserGenerator::writeSource()
 {
     std::stringstream output;
+    std::string temp;
+    std::vector<std::string> split_string;
 
     output << "#include \"" + package_name + "/" + package_name + ".hpp\"\n\n";
 
@@ -287,8 +289,15 @@ void ParserGenerator::writeSource()
 
     // output << "\tstd::string bag_filename = this->get_parameter(\"path\").as_string() + this->get_parameter(\"bagfile\").as_string();\n\n";
 
-    output << "\tpath = \"/home/kyle/Data/test/\";";
-    output << "\tstd::string bag_filename = path + \"2023-01-03_VEGAS_run1_vehicle_1726\";\n";
+    std::ifstream bag_file_path;
+    bag_file_path.open("../config/path.txt");
+    getline(bag_file_path, temp);
+    split_string = split(temp, '/');
+    temp.erase(temp.end()-split_string.at(split_string.size()-1).length(), temp.end());
+    std::string path = temp;
+    
+    output << "\tpath = \"" + path + "\";\n";
+    output << "\tstd::string bag_filename = path + \"" + split_string.at(split_string.size()-1) + "\";\n";
 
     output << "\tthis->reader = new rosbag2_cpp::readers::SequentialReader();\n";
     output << "\tthis->storage_options.uri = bag_filename;\n";
@@ -318,7 +327,6 @@ void ParserGenerator::writeSource()
     output << "\n\tstd::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();\n";
     output << "\tstd::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();\n";
 
-    std::string temp;
     // output << "\n\tthis->read_bag();\n\n";
     for (int i = 0; i < topic_sorting_data.size(); i++)
     {
@@ -345,7 +353,6 @@ void ParserGenerator::writeSource()
     std::string message_data_filename;
     std::string buffer;
     std::ifstream message_data_file;
-    std::vector<std::string> split_string;
     std::vector<std::string> types;
     std::vector<std::string> field_names;
     std::vector<std::string> field_array;
