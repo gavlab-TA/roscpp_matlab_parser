@@ -64,12 +64,12 @@ A more irregular example is shown here:
 ---
 ## Current Development on this Package
 ---
-[x] The package currently successfully parses all numerical values from bag files 
+- [x] The package currently successfully parses all numerical values from bag files 
 
-[x] Any empty topics are removed from the data to speed up process and cleanup output.
+- [x] Any empty topics are removed from the data to speed up process and cleanup output.
 
-[] Only 1-D arrays are currently supported
+- [ ] Only 1-D arrays are currently supported
 
-[] String fields are currently not supported
+- [ ] String fields are currently not supported
 
-[] Automation scripts can be improved to allow for options to use existing workspaces for the message data instead of needed to build a local workspace
+- [ ] Automation scripts can be improved to allow for options to use existing workspaces for the message data instead of needed to build a local workspace
