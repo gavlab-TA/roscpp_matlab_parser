@@ -1,11 +1,5 @@
 .vscode
-build/bag_analyzer
-build/CMakeFiles
-build/Makefile
-build/parser_generator
-build/CMakeCache.txt
-build/cmake_install.cmake
-build/message_analyzer
+build
 config/bag_info.txt
 config/topic_data.txt
 config/message_names.txt
