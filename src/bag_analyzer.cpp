@@ -245,35 +245,52 @@ int main()
 
     std::string raw_message_name;
 
+    std::string start_parse_prefix = "Topic information";
+    std::string prefix_check;
+    bool ready = false;
+
     while (!info_file.eof())
     {
         getline(info_file, temp);
-        temp.erase(0, 18);
-        if (temp.length() != 0)
-        {
-            line_data.clear();
-            line_data = split(temp, '|');
-            std::string count = line_data.at(2).erase(0, 8);
-            if (count.at(0) != '0')
-            {
 
-                std::string name = line_data.at(0).erase(0, 8);
-                name.erase(name.length() - 1, name.length());
-                topic_names.push_back(name);
-                std::string type = line_data.at(1).erase(0, 7);
-                type.erase(type.length() - 1, type.length());
-                bool save_message = !checkForString(message_names, type);
-                raw_message_name = type;
-                if (save_message)
+        if (!ready)
+        {
+            prefix_check = temp.substr(0, start_parse_prefix.length());
+            std::cout<<prefix_check << std::endl;
+            if (prefix_check == start_parse_prefix)
+            {
+                ready = true;
+            }
+        }
+        else
+        {
+            temp.erase(0, 18);
+            if (temp.length() != 0)
+            {
+                line_data.clear();
+                line_data = split(temp, '|');
+                std::string count = line_data.at(2).erase(0, 8);
+                if (count.at(0) != '0')
                 {
-                    message_names.push_back(type);
+
+                    std::string name = line_data.at(0).erase(0, 8);
+                    name.erase(name.length() - 1, name.length());
+                    topic_names.push_back(name);
+                    std::string type = line_data.at(1).erase(0, 7);
+                    type.erase(type.length() - 1, type.length());
+                    bool save_message = !checkForString(message_names, type);
+                    raw_message_name = type;
+                    if (save_message)
+                    {
+                        message_names.push_back(type);
+                    }
+                    type = formatMessageTypes(type);
+                    if (save_message)
+                    {
+                        message_types.push_back(type);
+                    }
+                    topic_data.push_back(name + "#" + type + "#" + raw_message_name);
                 }
-                type = formatMessageTypes(type);
-                if (save_message)
-                {
-                    message_types.push_back(type);
-                }
-                topic_data.push_back(name + "#" + type + "#" + raw_message_name);
             }
         }
     }
