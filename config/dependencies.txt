@@ -10,5 +10,7 @@ geometry_msgs
 sensor_msgs
 gps_msgs
 TinyMAT
-can_msgs 
+can_msgs
+lifecycle_msgs
+tf2_msgs 
 object_detection

@@ -131,7 +131,7 @@ void setupPackageDepends(std::string depends_path_filename, std::string source_p
 
 void buildWorkspace(std::string package_name)
 {
-    std::string command = "cd ../output/" + package_name + "_ws && colcon build";
+    std::string command = "cd ../output/" + package_name + "_ws && colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release";
     int system_status = system(command.c_str());
     if (system_status != 0)
     {

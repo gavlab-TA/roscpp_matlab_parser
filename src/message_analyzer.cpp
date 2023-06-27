@@ -554,6 +554,7 @@ void clearArrays(std::vector<std::string> message_types)
         {
             getline(file, buffer);
             has_array = false;
+
             for (int i = 0; i < buffer.length(); i++)
             {
                 if (buffer.at(i) == '[')
@@ -712,7 +713,7 @@ void applyArraysToSubFields(std::vector<std::string> message_types)
             else
             {
                 adjusted_output = split_string.at(0) + "#" + split_string.at(1).append("@") + "#" + split_string.at(2);
-                output_lines.push_back(adjusted_output);
+                //output_lines.push_back(adjusted_output);
             }
 
             line++;
@@ -895,6 +896,75 @@ void removeExtraSpaces(std::vector<std::string> message_types)
     }
 }
 
+bool checkForFieldType(std::string key, std::string line)
+{
+    bool beginning_blanks = true;
+    for (int i=0; i < line.length(); i++)
+    {
+        if ((line.at(i) == ' ' || line.at(i) == '\t') && beginning_blanks)
+        {
+            // continue
+        }
+        else
+        {
+            beginning_blanks = false;
+
+            if(key == line.substr(i, key.length()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }        
+        }
+    }
+    return false;
+}
+
+void scanForUniqueFields(std::vector<std::string> message_types)
+{
+    std::string filename;
+    std::fstream file;
+    std::stringstream output;
+    std::string buffer;
+    std::vector<std::string> output_line;
+
+    for (int i = 0; i < message_types.size(); i++)
+    {
+        output_line.clear();
+
+        filename = "../msg_data/" + messageTypesToSnake(message_types.at(i)) + ".log";
+        file.open(filename);
+        while (!file.eof())
+        {
+            getline(file, buffer);
+
+            if (checkForFieldType("Quaternion", buffer))
+            {
+                output_line.push_back(buffer);
+                for (int i = 0; i < 4; i++)
+                {
+                    getline(file, buffer);
+                    buffer.erase(buffer.end()-1);
+                    output_line.push_back(buffer);
+                }
+            }
+            else
+            {
+                output_line.push_back(buffer);
+            }
+        }
+        file.close();
+
+        output = loadOutput(output_line);
+
+        file.open(filename, std::ofstream::out | std::ofstream::trunc);
+        file << output.str();
+        file.close();
+    }
+}
+
 int main()
 {
     std::vector<std::string> message_types;
@@ -910,15 +980,17 @@ int main()
         }
     }
 
-    // message_types.clear();
-    // message_types.push_back("geometry_msgs/msg/PoseWithCovarianceStamped");
-    // message_types.push_back("raptor_dbw_msgs/msg/RestOfField");
+    //message_types.clear();
+    //message_types.push_back("nav_msgs/msg/Odometry");
+    //message_types.push_back("tf2_msgs/msg/TFMessage");
     // message_types.push_back("sensor_msgs/msg/TimeReference");
     // message_types.push_back("novatel_oem7_msgs/msg/RANGE");
     // message_types.push_back("gps_msgs/msg/GPSFix");
     // message_types.push_back("sensor_msgs/msg/NavSatFix");
 
     makeLogs(message_types);
+
+    scanForUniqueFields(message_types);
 
     decomment(message_types);
     removeOptions(message_types);
