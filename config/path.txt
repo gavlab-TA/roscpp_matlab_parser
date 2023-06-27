@@ -1,1 +1,1 @@
-/home/kyle/Data/bag_parse/2023-01-03_VEGAS_run1_vehicle_1726
+/home/kyle/Data/barber_parse/2023-06-26_BARBER_TRACK_run1-part2_full_1508

@@ -256,7 +256,6 @@ int main()
         if (!ready)
         {
             prefix_check = temp.substr(0, start_parse_prefix.length());
-            std::cout<<prefix_check << std::endl;
             if (prefix_check == start_parse_prefix)
             {
                 ready = true;
