@@ -1,8 +1,9 @@
-/home/kyle/devel/atr/aubie/src/external/atr_msgs
-/home/kyle/devel/atr/aubie/src/external/raptor-dbw-ros2/raptor_dbw_msgs
+/home/kyle/devel/atr/aubie/src/aubie_code_utils/atr_msgs
+/home/kyle/devel/atr/aubie/src/system_modules/raptor-dbw-ros2/raptor_dbw_msgs
 /home/kyle/devel/atr/aubie/src/drivers/novatel_oem7_driver/novatel_oem7_msgs
 /home/kyle/devel/atr/aubie/src/drivers/vectornav/vectornav_msgs
-/home/kyle/stable/TinyMAT
+/home/kyle/Stable/TinyMAT
 
 /home/kyle/devel/atr/aubie/src/perception/lidar
 /home/kyle/devel/atr/aubie/src/external/socketcan_interface/can_msgs
+/home/kyle/devel/atr/aubie/src/external/delphi_esr_messages/delphi_esr_msgs/

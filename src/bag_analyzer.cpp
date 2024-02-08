@@ -347,5 +347,7 @@ int main()
     setupPackageDepends(depends_path_filename, source_path);
     buildWorkspace(package_name);
 
+    std::cout<<"Bag Analyzed"<<std::endl;
+
     return 0;
 }

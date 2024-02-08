@@ -498,6 +498,8 @@ void setupFieldNamespaces(std::vector<std::string> message_types)
         output_lines.clear();
         current_namespace.clear();
 
+        std::cout<<filename<<std::endl;
+
         while (!file.eof())
         {
             getline(file, buffer);
@@ -980,6 +982,8 @@ int main()
         }
     }
 
+    std::cout<<"Retrieved Messages"<<std::endl;
+
     //message_types.clear();
     //message_types.push_back("nav_msgs/msg/Odometry");
     //message_types.push_back("tf2_msgs/msg/TFMessage");
@@ -989,24 +993,46 @@ int main()
     // message_types.push_back("sensor_msgs/msg/NavSatFix");
 
     makeLogs(message_types);
+    std::cout<<"Logs Created"<<std::endl;
 
     scanForUniqueFields(message_types);
+    std::cout<<"Unique Fields"<<std::endl;
 
     decomment(message_types);
+    std::cout<<"Remove Comment"<<std::endl;
+
     removeOptions(message_types);
+    std::cout<<"Remove Options"<<std::endl;
+
     deblank(message_types);
+    std::cout<<"Remove Blanks"<<std::endl;
+
     cleanupExtraSpaces(message_types);
+    std::cout<<"Remove Extra Spaces"<<std::endl;
+
     collapseTabs(message_types);
+    std::cout<<"Collapse Tabs"<<std::endl;
+
     prepForSplit(message_types);
+    std::cout<<"Prep For Splits"<<std::endl;
+
     applyArraysToSubFields(message_types);
+    std::cout<<"Handle Arrays"<<std::endl;
 
     setupFieldNamespaces(message_types);
+    std::cout<<"Setup Namespaces"<<std::endl;
+
     clearArrays(message_types);
+    std::cout<<"Clear Arrays"<<std::endl;
 
     addArrayInfo(message_types);
+    std::cout<<"Add Array Info"<<std::endl;
+
     removeFieldNesting(message_types);
+    std::cout<<"Remove Field Nesting"<<std::endl;
 
     removeExtraSpaces(message_types);
+    std::cout<<"Remove Extra Spaces"<<std::endl;
     
     return 0;
 }
