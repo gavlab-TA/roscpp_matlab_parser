@@ -611,6 +611,8 @@ void applyArraysToSubFields(std::vector<std::string> message_types)
         filename = "../msg_data/" + messageTypesToSnake(message_types.at(i)) + ".log";
         max_level = 0;
 
+        std::cout<<filename<<std::endl;
+
         // 1st pass - getting file size vars
         file.open(filename);
         levels.clear();

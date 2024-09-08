@@ -6,4 +6,5 @@
 
 /home/kyle/devel/atr/aubie/src/perception/lidar
 /home/kyle/devel/atr/aubie/src/external/socketcan_interface/can_msgs
-/home/kyle/devel/atr/aubie/src/external/delphi_esr_messages/delphi_esr_msgs/
+/home/kyle/devel/atr/aubie/src/tools/simple_sim
+/home/kyle/devel/atr/aubie/src/aubie_code_utils/aubie_utils
